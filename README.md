@@ -14,9 +14,9 @@ Copy the files from local filesystem to the HDFS filesystem:
 
 Run the Hadoop WordCount example with the input and output specified.
 (If your run failed first cleadn output: `hdfs dfs -rmdir output_new`)   
-`hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \   
+```hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
 -input /user/cloudera/input \   
 -output /user/cloudera/output_new \   
 -mapper /home/cloudera/HadoopWordCountSample/wordcount_mapper.py \   
--reducer /home/cloudera/HadoopWordCountSample/wordcount_reducer.py`   
+-reducer /home/cloudera/HadoopWordCountSample/wordcount_reducer.py```  
 

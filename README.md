@@ -9,8 +9,12 @@ Create a directory on the HDFS file system
 `hdfs dfs -mkdir /user/cloudera/input` 
 
 Copy the files from local filesystem to the HDFS filesystem:
-```hdfs dfs -put /home/cloudera/testfile1 /user/cloudera/input```
-```hdfs dfs -put /home/cloudera/testfile2 /user/cloudera/input```   
+```
+hdfs dfs -put /home/cloudera/testfile1 /user/cloudera/input
+```
+```
+hdfs dfs -put /home/cloudera/testfile2 /user/cloudera/input
+```   
 
 Run the Hadoop WordCount example with the input and output specified.
 (If your run failed first cleadn output: `hdfs dfs -rmdir output_new`)   
@@ -19,5 +23,23 @@ hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
 -input /user/cloudera/input \   
 -output /user/cloudera/output_new \   
 -mapper /home/cloudera/HadoopWordCountSample/wordcount_mapper.py \   
--reducer /home/cloudera/HadoopWordCountSample/wordcount_reducer.py```  
+-reducer /home/cloudera/HadoopWordCountSample/wordcount_reducer.py
+```  
 
+see output
+```bash
+hdfs dfs -cat /user/cloudera/output_new/part-00000
+```
+
+To see the result of mappers, assign 0 reducers:
+```bash
+hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
+   -input /user/cloudera/input \
+   -output /user/cloudera/output_new_0 \
+   -mapper /home/cloudera/HadoopWordCountSample/wordcount_mapper.py \
+   -reducer /home/cloudera/HadoopWordCountSample/wordcount_reducer.py \
+   -numReduceTasks 0
+```
+```bash
+hdfs dfs -getmerge /user/cloudera/output_new_0/* wordcount_num0_output.txt 
+```
